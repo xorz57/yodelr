@@ -14,7 +14,7 @@ namespace yodelr {
         Topics getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const override;
 
     private:
-        Topics extractTopics(const std::string &postText);
+        static Topics extractTopics(const std::string &postText);
 
         std::map<std::uint64_t, std::string> mTimestampToPost;
         std::map<std::string, std::set<std::uint64_t>> mTopicToTimestamps;
