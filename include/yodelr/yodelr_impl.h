@@ -16,8 +16,8 @@ namespace yodelr {
     private:
         Topics extractTopics(const std::string &postText);
 
-        std::map<std::string, std::set<std::uint64_t>> mUsersToTimestamps;
-        std::map<std::uint64_t, std::string> mTimestampsToPosts;
-        std::map<std::string, std::set<std::uint64_t>> mTopicsToTimestamps;
+        std::map<std::string, std::set<std::uint64_t>> mUserToTimestamps;
+        std::map<std::uint64_t, std::string> mTimestampToPost;
+        std::map<std::string, std::set<std::uint64_t>> mTopicToTimestamps;
     };
 }// namespace yodelr

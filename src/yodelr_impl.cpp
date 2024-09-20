@@ -5,33 +5,33 @@
 using namespace yodelr;
 
 void YodelrImpl::addUser(const std::string &userName) {
-    mUsersToTimestamps[userName] = std::set<std::uint64_t>();
+    mUserToTimestamps[userName] = std::set<std::uint64_t>();
 }
 
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
-    mUsersToTimestamps[userName].insert(timestamp);
-    mTimestampsToPosts[timestamp] = postText;
+    mUserToTimestamps[userName].insert(timestamp);
+    mTimestampToPost[timestamp] = postText;
     for (const std::string &topic: extractTopics(postText)) {
-        mTopicsToTimestamps[topic].insert(timestamp);
+        mTopicToTimestamps[topic].insert(timestamp);
     }
 }
 
 void YodelrImpl::deleteUser(const std::string &userName) {
-    auto it = mUsersToTimestamps.find(userName);
-    if (it != mUsersToTimestamps.end()) {
+    auto it = mUserToTimestamps.find(userName);
+    if (it != mUserToTimestamps.end()) {
         for (auto timestamp: it->second) {
-            mTimestampsToPosts.erase(timestamp);
+            mTimestampToPost.erase(timestamp);
         }
     }
 }
 
 PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
     PostTexts postTexts;
-    auto it1 = mUsersToTimestamps.find(userName);
-    if (it1 != mUsersToTimestamps.end()) {
+    auto it1 = mUserToTimestamps.find(userName);
+    if (it1 != mUserToTimestamps.end()) {
         for (auto timestamp: it1->second) {
-            auto it2 = mTimestampsToPosts.find(timestamp);
-            if (it2 != mTimestampsToPosts.end()) {
+            auto it2 = mTimestampToPost.find(timestamp);
+            if (it2 != mTimestampToPost.end()) {
                 postTexts.push_back(it2->second);
             }
         }
@@ -41,11 +41,11 @@ PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
 
 PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
     PostTexts postTexts;
-    auto it1 = mTopicsToTimestamps.find(topic);
-    if (it1 != mTopicsToTimestamps.end()) {
+    auto it1 = mTopicToTimestamps.find(topic);
+    if (it1 != mTopicToTimestamps.end()) {
         for (auto timestamp: it1->second) {
-            auto it2 = mTimestampsToPosts.find(timestamp);
-            if (it2 != mTimestampsToPosts.end()) {
+            auto it2 = mTimestampToPost.find(timestamp);
+            if (it2 != mTimestampToPost.end()) {
                 postTexts.push_back(it2->second);
             }
         }
