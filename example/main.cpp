@@ -1,7 +1,7 @@
 #include <yodelr/yodelr_impl.h>
 
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 
 int main() {
     yodelr::Yodelr *service = new yodelr::YodelrImpl;
