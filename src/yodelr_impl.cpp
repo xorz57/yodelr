@@ -3,7 +3,7 @@
 using namespace yodelr;
 
 void YodelrImpl::addUser(const std::string &userName) {
-    // TODO
+    mUsersToTimestamps[userName] = std::set<std::uint64_t>();
 }
 
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
