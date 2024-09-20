@@ -2,12 +2,10 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 
 int main() {
-    yodelr::Yodelr *service = new yodelr::YodelrImpl;
-    if (service == nullptr) {
-        return EXIT_FAILURE;
-    }
+    std::unique_ptr<yodelr::Yodelr> service = std::make_unique<yodelr::YodelrImpl>();
 
     service->addUser("john");
     service->addPost("john", "just #chilling today", 1);
@@ -33,8 +31,6 @@ int main() {
     for (const auto &topic: topics2) {
         std::cout << topic << "\n";
     }
-
-    delete service;
 
     return EXIT_SUCCESS;
 }
