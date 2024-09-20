@@ -67,12 +67,12 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
             topicFrequency[topic] = count;
         }
     }
-    std::vector<std::pair<std::string, int>> sortedTopics(topicFrequency.begin(), topicFrequency.end());
-    std::sort(sortedTopics.begin(), sortedTopics.end(), [](const auto &lhs, const auto &rhs) {
+    std::vector<std::pair<std::string, std::uint64_t>> topicFrequencySorted(topicFrequency.begin(), topicFrequency.end());
+    std::sort(topicFrequencySorted.begin(), topicFrequencySorted.end(), [](const auto &lhs, const auto &rhs) {
         return lhs.second > rhs.second;
     });
-    for (const auto &topic: sortedTopics) {
-        topics.push_back(topic.first);
+    for (const auto &[topic, count]: topicFrequencySorted) {
+        topics.push_back(topic);
     }
     return topics;
 }
