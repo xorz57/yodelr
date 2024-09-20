@@ -6,7 +6,7 @@ void YodelrImpl::addUser(const std::string &userName) {
     // TODO
 }
 
-void YodelrImpl::addPost(const std::string &userName, const std::string &postText, uint64_t timestamp) {
+void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
     // TODO
 }
 
@@ -24,7 +24,7 @@ PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
     return PostTexts();
 }
 
-Topics YodelrImpl::getTrendingTopics(uint64_t fromTimestamp, uint64_t toTimestamp) const {
+Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const {
     // TODO
     return Topics();
 }
