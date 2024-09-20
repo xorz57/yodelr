@@ -6,6 +6,9 @@
 
 int main() {
     std::unique_ptr<yodelr::Yodelr> service = std::make_unique<yodelr::YodelrImpl>();
+    if (!service) {
+        return EXIT_FAILURE;
+    }
 
     service->addUser("john");
     service->addPost("john", "just #chilling today", 1);
