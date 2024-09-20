@@ -11,7 +11,12 @@ void YodelrImpl::addPost(const std::string &userName, const std::string &postTex
 }
 
 void YodelrImpl::deleteUser(const std::string &userName) {
-    // TODO
+    auto it = mUsersToTimestamps.find(userName);
+    if (it != mUsersToTimestamps.end()) {
+        for (auto timestamp: it->second) {
+            mTimestampsToPosts.erase(timestamp);
+        }
+    }
 }
 
 PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
