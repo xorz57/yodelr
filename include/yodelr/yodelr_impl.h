@@ -15,10 +15,10 @@ namespace yodelr {
         Topics getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const override;
 
     private:
-        static Topics extractTopics1(const std::string &postText);
-        static Topics extractTopics2(const std::string &postText);
+        static Topics extractTopicsWithRegex(const std::string &postText);
+        static Topics extractTopicsWithoutRegex(const std::string &postText);
 
-        static const std::regex sTopicPattern;
+        static const std::regex sTopicRegex;
 
         std::map<std::uint64_t, std::string, std::less<std::uint64_t>> mTimestampToPostText;
         std::map<std::string, std::set<std::uint64_t>> mTopicToTimestamps;
