@@ -4,6 +4,8 @@
 
 using namespace yodelr;
 
+const std::regex YodelrImpl::sTopicPattern(R"(\#([0-9a-zA-Z_]+))");
+
 void YodelrImpl::addUser(const std::string &userName) {
     mUserToTimestamps[userName] = std::set<std::uint64_t>();
 }
@@ -79,8 +81,7 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
 
 Topics YodelrImpl::extractTopics1(const std::string &postText) {
     Topics topics;
-    std::regex pattern(R"(\#([0-9a-zA-Z_]+))");
-    auto wordsBegin = std::sregex_iterator(postText.begin(), postText.end(), pattern);
+    auto wordsBegin = std::sregex_iterator(postText.begin(), postText.end(), sTopicPattern);
     auto wordsEnd = std::sregex_iterator();
     for (std::sregex_iterator i = wordsBegin; i != wordsEnd; ++i) {
         topics.push_back((*i)[1].str());

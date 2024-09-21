@@ -1,6 +1,7 @@
 #include <yodelr/yodelr.h>
 
 #include <map>
+#include <regex>
 #include <set>
 
 namespace yodelr {
@@ -16,6 +17,8 @@ namespace yodelr {
     private:
         static Topics extractTopics1(const std::string &postText);
         static Topics extractTopics2(const std::string &postText);
+
+        static const std::regex sTopicPattern;
 
         std::map<std::uint64_t, std::string, std::less<std::uint64_t>> mTimestampToPostText;
         std::map<std::string, std::set<std::uint64_t>> mTopicToTimestamps;
