@@ -9,5 +9,5 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(Yodelr STATIC "src/yodelr_impl.cpp")
 target_include_directories(Yodelr PUBLIC "include")
 
-add_executable(YodelrExample "example/main.cpp")
+add_executable(YodelrExample "examples/main.cpp")
 target_link_libraries(YodelrExample PRIVATE Yodelr)
