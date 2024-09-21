@@ -7,7 +7,7 @@ using namespace yodelr;
 const std::regex YodelrImpl::sTopicRegex(R"(\#([0-9a-zA-Z_]+))");
 
 void YodelrImpl::addUser(const std::string &userName) {
-    mUserToTimestamps[userName] = std::set<std::uint64_t>();
+    mUserToTimestamps[userName] = std::set<std::uint64_t, std::greater<std::uint64_t>>();
 }
 
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {

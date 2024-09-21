@@ -23,8 +23,8 @@ TEST_F(YodelrTest, AddUserAndCheckPosts) {
 
     auto postTexts = service->getPostsForUser("john");
     EXPECT_EQ(postTexts.size(), 2);
-    EXPECT_EQ(postTexts[0], "just #chilling today");
-    EXPECT_EQ(postTexts[1], "eating #steak for dinner");
+    EXPECT_EQ(postTexts[0], "eating #steak for dinner");
+    EXPECT_EQ(postTexts[1], "just #chilling today");
 }
 
 TEST_F(YodelrTest, AddPostAndCheckTopic) {
@@ -34,8 +34,8 @@ TEST_F(YodelrTest, AddPostAndCheckTopic) {
 
     auto postTexts = service->getPostsForTopic("steak");
     EXPECT_EQ(postTexts.size(), 2);
-    EXPECT_EQ(postTexts[0], "eating #steak for dinner");
-    EXPECT_EQ(postTexts[1], "ugh! this #steak tasted like dog food");
+    EXPECT_EQ(postTexts[0], "ugh! this #steak tasted like dog food");
+    EXPECT_EQ(postTexts[1], "eating #steak for dinner");
 }
 
 TEST_F(YodelrTest, DeleteUser) {
