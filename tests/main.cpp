@@ -21,10 +21,10 @@ TEST_F(YodelrTest, AddUserAndCheckPosts) {
     service->addPost("john", "just #chilling today", 1);
     service->addPost("john", "eating #steak for dinner", 2);
 
-    auto posts = service->getPostsForUser("john");
-    EXPECT_EQ(posts.size(), 2);
-    EXPECT_EQ(posts[0], "just #chilling today");
-    EXPECT_EQ(posts[1], "eating #steak for dinner");
+    auto postTexts = service->getPostsForUser("john");
+    EXPECT_EQ(postTexts.size(), 2);
+    EXPECT_EQ(postTexts[0], "just #chilling today");
+    EXPECT_EQ(postTexts[1], "eating #steak for dinner");
 }
 
 TEST_F(YodelrTest, AddPostAndCheckTopic) {
@@ -32,10 +32,10 @@ TEST_F(YodelrTest, AddPostAndCheckTopic) {
     service->addPost("john", "eating #steak for dinner", 2);
     service->addPost("john", "ugh! this #steak tasted like dog food", 3);
 
-    auto posts = service->getPostsForTopic("steak");
-    EXPECT_EQ(posts.size(), 2);
-    EXPECT_EQ(posts[0], "eating #steak for dinner");
-    EXPECT_EQ(posts[1], "ugh! this #steak tasted like dog food");
+    auto postTexts = service->getPostsForTopic("steak");
+    EXPECT_EQ(postTexts.size(), 2);
+    EXPECT_EQ(postTexts[0], "eating #steak for dinner");
+    EXPECT_EQ(postTexts[1], "ugh! this #steak tasted like dog food");
 }
 
 TEST_F(YodelrTest, DeleteUser) {
@@ -44,8 +44,8 @@ TEST_F(YodelrTest, DeleteUser) {
 
     service->deleteUser("john");
 
-    auto posts = service->getPostsForUser("john");
-    EXPECT_TRUE(posts.empty());
+    auto postTexts = service->getPostsForUser("john");
+    EXPECT_TRUE(postTexts.empty());
 }
 
 TEST_F(YodelrTest, GetTrendingTopics) {
@@ -62,6 +62,6 @@ TEST_F(YodelrTest, GetTrendingTopics) {
 TEST_F(YodelrTest, NoPostsForNonExistentTopic) {
     service->addPost("john", "just #chilling today", 1);
 
-    auto posts = service->getPostsForTopic("nonexistent");
-    EXPECT_TRUE(posts.empty());
+    auto postTexts = service->getPostsForTopic("nonexistent");
+    EXPECT_TRUE(postTexts.empty());
 }
