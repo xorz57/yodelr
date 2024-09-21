@@ -88,12 +88,12 @@ Topics YodelrImpl::extractTopicsWithoutRegex(const std::string &postText) {
     Topics topics;
     std::string topic;
     bool inTopic = false;
-    for (const char i : postText) {
-        if (i == '#') {
+    for (const char c : postText) {
+        if (c == '#') {
             inTopic = true;
             topic.clear();
-        } else if (inTopic && (isalnum(i) || i == '_')) {
-            topic += i;
+        } else if (inTopic && (isalnum(c) || c == '_')) {
+            topic += c;
         } else if (inTopic) {
             if (!topic.empty()) {
                 topics.push_back(topic);
