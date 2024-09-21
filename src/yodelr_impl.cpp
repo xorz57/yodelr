@@ -57,8 +57,8 @@ PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
 
 Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const {
     Topics topics;
-    std::map<std::string, std::uint64_t> topicFrequency;
-    for (auto &[topic, timestamps]: mTopicToTimestamps) {
+    std::multimap<std::uint64_t, std::string, std::greater<std::uint64_t>> topicFrequency;
+    for (const auto &[topic, timestamps]: mTopicToTimestamps) {
         std::uint64_t count = 0;
         for (auto timestamp: timestamps) {
             if (timestamp >= fromTimestamp && timestamp <= toTimestamp) {
@@ -66,14 +66,10 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
             }
         }
         if (count > 0) {
-            topicFrequency[topic] = count;
+            topicFrequency.emplace(count, topic);
         }
     }
-    std::vector<std::pair<std::string, std::uint64_t>> topicFrequencySorted(topicFrequency.begin(), topicFrequency.end());
-    std::sort(topicFrequencySorted.begin(), topicFrequencySorted.end(), [](const auto &lhs, const auto &rhs) {
-        return lhs.second > rhs.second;
-    });
-    for (const auto &[topic, count]: topicFrequencySorted) {
+    for (const auto &[count, topic]: topicFrequency) {
         topics.push_back(topic);
     }
     return topics;
