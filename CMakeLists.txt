@@ -25,6 +25,5 @@ if(YODELR_EXAMPLES)
 endif()
 
 if(YODELR_TESTS)
-    enable_testing()
     add_subdirectory(tests)
 endif()
