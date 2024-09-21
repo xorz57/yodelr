@@ -66,9 +66,7 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
                 count++;
             }
         }
-        if (count > 0) {
-            topicFrequency.emplace(count, topic);
-        }
+        topicFrequency.emplace(count, topic);
     }
     for (const auto &[count, topic]: topicFrequency) {
         topics.push_back(topic);
