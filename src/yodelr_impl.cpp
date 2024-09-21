@@ -21,9 +21,13 @@ void YodelrImpl::addPost(const std::string &userName, const std::string &postTex
 void YodelrImpl::deleteUser(const std::string &userName) {
     const auto it = mUserToTimestamps.find(userName);
     if (it != mUserToTimestamps.end()) {
-        for (auto timestamp: it->second) {
+        for (const auto timestamp: it->second) {
             mTimestampToPostText.erase(timestamp);
+            for (auto &timestamps: std::views::values(mTopicToTimestamps)) {
+                timestamps.erase(timestamp);
+            }
         }
+        mUserToTimestamps.erase(it);
     }
 }
 
