@@ -3,7 +3,6 @@
 #include <map>
 #include <regex>
 #include <set>
-#include <functional>
 
 namespace yodelr {
     class YodelrImpl : public Yodelr {
