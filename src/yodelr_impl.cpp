@@ -66,7 +66,18 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
                 count++;
             }
         }
-        topicFrequency.emplace(count, topic);
+        bool flag = false;
+        const auto range = topicFrequency.equal_range(count);
+        for (auto hint = range.first; hint != range.second; ++hint) {
+            if (topic < hint->second) {
+                topicFrequency.emplace_hint(hint, count, topic);
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            topicFrequency.emplace(count, topic);
+        }
     }
     for (const auto &topic: std::views::values(topicFrequency)) {
         topics.push_back(topic);
@@ -87,21 +98,21 @@ Topics YodelrImpl::extractTopicsWithRegex(const std::string &postText) {
 Topics YodelrImpl::extractTopicsWithoutRegex(const std::string &postText) {
     Topics topics;
     std::string topic;
-    bool inTopic = false;
-    for (const char c : postText) {
+    bool flag = false;
+    for (const char c: postText) {
         if (c == '#') {
-            inTopic = true;
+            flag = true;
             topic.clear();
-        } else if (inTopic && (isalnum(c) || c == '_')) {
+        } else if (flag && (isalnum(c) || c == '_')) {
             topic += c;
-        } else if (inTopic) {
+        } else if (flag) {
             if (!topic.empty()) {
                 topics.push_back(topic);
             }
-            inTopic = false;
+            flag = false;
         }
     }
-    if (inTopic && !topic.empty()) {
+    if (flag && !topic.empty()) {
         topics.push_back(topic);
     }
     return topics;
