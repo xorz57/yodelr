@@ -11,7 +11,7 @@ void YodelrImpl::addUser(const std::string &userName) {
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
     mUserToTimestamps[userName].insert(timestamp);
     mTimestampToPostText[timestamp] = postText;
-    for (const std::string &topic: YodelrImpl::extractTopics(postText)) {
+    for (const std::string &topic: YodelrImpl::extractTopics2(postText)) {
         mTopicToTimestamps[topic].insert(timestamp);
     }
 }
@@ -77,13 +77,36 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
     return topics;
 }
 
-Topics YodelrImpl::extractTopics(const std::string &postText) {
+Topics YodelrImpl::extractTopics1(const std::string &postText) {
     Topics topics;
     std::regex pattern(R"(\#([0-9a-zA-Z_]+))");
     auto wordsBegin = std::sregex_iterator(postText.begin(), postText.end(), pattern);
     auto wordsEnd = std::sregex_iterator();
     for (std::sregex_iterator i = wordsBegin; i != wordsEnd; ++i) {
         topics.push_back((*i)[1].str());
+    }
+    return topics;
+}
+
+Topics YodelrImpl::extractTopics2(const std::string &postText) {
+    Topics topics;
+    std::string topic;
+    bool inTopic = false;
+    for (size_t i = 0; i < postText.size(); ++i) {
+        if (postText[i] == '#') {
+            inTopic = true;
+            topic.clear();
+        } else if (inTopic && (isalnum(postText[i]) || postText[i] == '_')) {
+            topic += postText[i];
+        } else if (inTopic) {
+            if (!topic.empty()) {
+                topics.push_back(topic);
+            }
+            inTopic = false;
+        }
+    }
+    if (inTopic && !topic.empty()) {
+        topics.push_back(topic);
     }
     return topics;
 }
