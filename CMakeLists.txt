@@ -9,4 +9,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(Yodelr STATIC src/yodelr_impl.cpp)
 target_include_directories(Yodelr PUBLIC include)
 
+add_subdirectory(benchmarks)
 add_subdirectory(examples)
+add_subdirectory(tests)
