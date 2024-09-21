@@ -16,6 +16,7 @@ enable_testing()
 
 add_executable(YodelrTest main.cpp)
 target_link_libraries(YodelrTest PRIVATE GTest::gtest_main)
+target_link_libraries(YodelrTest PRIVATE Yodelr::Yodelr)
 
 include(GoogleTest)
 
