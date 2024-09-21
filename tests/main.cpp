@@ -2,7 +2,7 @@
 
 #include <yodelr/yodelr_impl.h>
 
-class YodelrTest : public ::testing::Test {
+class YodelrTest : public testing::Test {
 protected:
     std::unique_ptr<yodelr::Yodelr> service;
 
