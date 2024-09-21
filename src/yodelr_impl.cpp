@@ -10,7 +10,7 @@ void YodelrImpl::addUser(const std::string &userName) {
 
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
     mUserToTimestamps[userName].insert(timestamp);
-    mTimestampToPost[timestamp] = postText;
+    mTimestampToPostText[timestamp] = postText;
     for (const std::string &topic: YodelrImpl::extractTopics(postText)) {
         mTopicToTimestamps[topic].insert(timestamp);
     }
@@ -20,7 +20,7 @@ void YodelrImpl::deleteUser(const std::string &userName) {
     auto it = mUserToTimestamps.find(userName);
     if (it != mUserToTimestamps.end()) {
         for (auto timestamp: it->second) {
-            mTimestampToPost.erase(timestamp);
+            mTimestampToPostText.erase(timestamp);
         }
     }
 }
@@ -30,8 +30,8 @@ PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
     auto it1 = mUserToTimestamps.find(userName);
     if (it1 != mUserToTimestamps.end()) {
         for (auto timestamp: it1->second) {
-            auto it2 = mTimestampToPost.find(timestamp);
-            if (it2 != mTimestampToPost.end()) {
+            auto it2 = mTimestampToPostText.find(timestamp);
+            if (it2 != mTimestampToPostText.end()) {
                 postTexts.push_back(it2->second);
             }
         }
@@ -44,8 +44,8 @@ PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
     auto it1 = mTopicToTimestamps.find(topic);
     if (it1 != mTopicToTimestamps.end()) {
         for (auto timestamp: it1->second) {
-            auto it2 = mTimestampToPost.find(timestamp);
-            if (it2 != mTimestampToPost.end()) {
+            auto it2 = mTimestampToPostText.find(timestamp);
+            if (it2 != mTimestampToPostText.end()) {
                 postTexts.push_back(it2->second);
             }
         }
