@@ -78,7 +78,7 @@ Topics YodelrImpl::extractTopicsWithRegex(const std::string &postText) {
     Topics topics;
     auto wordsBegin = std::sregex_iterator(postText.begin(), postText.end(), sTopicRegex);
     auto wordsEnd = std::sregex_iterator();
-    for (std::sregex_iterator i = wordsBegin; i != wordsEnd; ++i) {
+    for (auto i = wordsBegin; i != wordsEnd; ++i) {
         topics.push_back((*i)[1].str());
     }
     return topics;
@@ -88,7 +88,7 @@ Topics YodelrImpl::extractTopicsWithoutRegex(const std::string &postText) {
     Topics topics;
     std::string topic;
     bool inTopic = false;
-    for (size_t i = 0; i < postText.size(); ++i) {
+    for (auto i = 0; i < postText.size(); ++i) {
         if (postText[i] == '#') {
             inTopic = true;
             topic.clear();
