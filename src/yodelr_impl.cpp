@@ -61,6 +61,7 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
     for (const auto &[topic, timestamps]: mTopicToTimestamps) {
         std::uint64_t count = 0;
         for (auto timestamp: timestamps) {
+            if (timestamp > toTimestamp) break;
             if (timestamp >= fromTimestamp && timestamp <= toTimestamp) {
                 count++;
             }
