@@ -1,13 +1,13 @@
 #include <yodelr/yodelr_impl.h>
 
-#include <regex>
+#include <ranges>
 
 using namespace yodelr;
 
 const std::regex YodelrImpl::sTopicRegex(R"(\#([0-9a-zA-Z_]+))");
 
 void YodelrImpl::addUser(const std::string &userName) {
-    mUserToTimestamps[userName] = std::set<std::uint64_t, std::greater<std::uint64_t>>();
+    mUserToTimestamps[userName] = {};
 }
 
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
@@ -19,7 +19,7 @@ void YodelrImpl::addPost(const std::string &userName, const std::string &postTex
 }
 
 void YodelrImpl::deleteUser(const std::string &userName) {
-    auto it = mUserToTimestamps.find(userName);
+    const auto it = mUserToTimestamps.find(userName);
     if (it != mUserToTimestamps.end()) {
         for (auto timestamp: it->second) {
             mTimestampToPostText.erase(timestamp);
@@ -29,10 +29,10 @@ void YodelrImpl::deleteUser(const std::string &userName) {
 
 PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
     PostTexts postTexts;
-    auto it1 = mUserToTimestamps.find(userName);
+    const auto it1 = mUserToTimestamps.find(userName);
     if (it1 != mUserToTimestamps.end()) {
         for (auto timestamp: it1->second) {
-            auto it2 = mTimestampToPostText.find(timestamp);
+            const auto it2 = mTimestampToPostText.find(timestamp);
             if (it2 != mTimestampToPostText.end()) {
                 postTexts.push_back(it2->second);
             }
@@ -43,10 +43,10 @@ PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
 
 PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
     PostTexts postTexts;
-    auto it1 = mTopicToTimestamps.find(topic);
+    const auto it1 = mTopicToTimestamps.find(topic);
     if (it1 != mTopicToTimestamps.end()) {
         for (auto timestamp: it1->second) {
-            auto it2 = mTimestampToPostText.find(timestamp);
+            const auto it2 = mTimestampToPostText.find(timestamp);
             if (it2 != mTimestampToPostText.end()) {
                 postTexts.push_back(it2->second);
             }
@@ -57,10 +57,10 @@ PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
 
 Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const {
     Topics topics;
-    std::multimap<std::uint64_t, std::string, std::greater<std::uint64_t>> topicFrequency;
+    std::multimap<std::uint64_t, std::string, std::greater<>> topicFrequency;
     for (const auto &[topic, timestamps]: mTopicToTimestamps) {
         std::uint64_t count = 0;
-        for (auto timestamp: timestamps) {
+        for (const auto timestamp: timestamps) {
             if (timestamp > toTimestamp) break;
             if (timestamp >= fromTimestamp && timestamp <= toTimestamp) {
                 count++;
@@ -68,7 +68,7 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
         }
         topicFrequency.emplace(count, topic);
     }
-    for (const auto &[count, topic]: topicFrequency) {
+    for (const auto &topic: std::views::values(topicFrequency)) {
         topics.push_back(topic);
     }
     return topics;
@@ -76,9 +76,9 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
 
 Topics YodelrImpl::extractTopicsWithRegex(const std::string &postText) {
     Topics topics;
-    auto wordsBegin = std::sregex_iterator(postText.begin(), postText.end(), sTopicRegex);
-    auto wordsEnd = std::sregex_iterator();
-    for (auto i = wordsBegin; i != wordsEnd; ++i) {
+    const auto topicsBegin = std::sregex_iterator(postText.begin(), postText.end(), sTopicRegex);
+    const auto topicsEnd = std::sregex_iterator();
+    for (auto i = topicsBegin; i != topicsEnd; ++i) {
         topics.push_back((*i)[1].str());
     }
     return topics;
@@ -88,12 +88,12 @@ Topics YodelrImpl::extractTopicsWithoutRegex(const std::string &postText) {
     Topics topics;
     std::string topic;
     bool inTopic = false;
-    for (auto i = 0; i < postText.size(); ++i) {
-        if (postText[i] == '#') {
+    for (const char i : postText) {
+        if (i == '#') {
             inTopic = true;
             topic.clear();
-        } else if (inTopic && (isalnum(postText[i]) || postText[i] == '_')) {
-            topic += postText[i];
+        } else if (inTopic && (isalnum(i) || i == '_')) {
+            topic += i;
         } else if (inTopic) {
             if (!topic.empty()) {
                 topics.push_back(topic);
