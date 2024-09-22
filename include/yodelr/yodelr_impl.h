@@ -1,3 +1,5 @@
+#pragma once
+
 #include <yodelr/yodelr.h>
 
 #include <map>
@@ -17,8 +19,8 @@ namespace yodelr {
     private:
         static Topics extractTopics(const std::string &postText);
 
-        std::map<std::uint64_t, std::string, std::greater<std::uint64_t>> mTimestampToPostText;
-        std::map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mTopicToTimestamps;
-        std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mUserNameToTimestamps;
+        std::map<std::uint64_t, std::string, std::greater<>> mTimestampToPostText;
+        std::map<std::string, std::set<std::uint64_t, std::greater<>>> mTopicToTimestamps;
+        std::unordered_map<std::string, std::set<std::uint64_t, std::greater<>>> mUserNameToTimestamps;
     };
 }// namespace yodelr
