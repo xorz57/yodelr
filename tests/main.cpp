@@ -103,19 +103,39 @@ TEST_F(YodelrTest, GetTrendingTopics) {
 
     const auto trendingTopicsFrom1To13 = service->getTrendingTopics(1, 13);
     EXPECT_EQ(trendingTopicsFrom1To13.size(), 2);
-    EXPECT_EQ(trendingTopicsFrom1To13[0], "topic1");
-    EXPECT_EQ(trendingTopicsFrom1To13[1], "topic2");
+    EXPECT_EQ(trendingTopicsFrom1To13[0], "topic1");// 3 times
+    EXPECT_EQ(trendingTopicsFrom1To13[1], "topic2");// 1 time
 
     const auto trendingTopicsFrom11To20 = service->getTrendingTopics(11, 20);
     EXPECT_EQ(trendingTopicsFrom11To20.size(), 4);
-    EXPECT_EQ(trendingTopicsFrom11To20[0], "topic1");
-    EXPECT_EQ(trendingTopicsFrom11To20[1], "topic2");
-    EXPECT_EQ(trendingTopicsFrom11To20[2], "topic3");
-    EXPECT_EQ(trendingTopicsFrom11To20[3], "topic4");
+    EXPECT_EQ(trendingTopicsFrom11To20[0], "topic1");// 3 times
+    EXPECT_EQ(trendingTopicsFrom11To20[1], "topic2");// 2 times
+    EXPECT_EQ(trendingTopicsFrom11To20[2], "topic3");// 1 time
+    EXPECT_EQ(trendingTopicsFrom11To20[3], "topic4");// 1 time
 
     const auto trendingTopicsFrom14To20 = service->getTrendingTopics(14, 20);
     EXPECT_EQ(trendingTopicsFrom14To20.size(), 3);
-    EXPECT_EQ(trendingTopicsFrom14To20[0], "topic2");
-    EXPECT_EQ(trendingTopicsFrom14To20[1], "topic3");
-    EXPECT_EQ(trendingTopicsFrom14To20[2], "topic4");
+    EXPECT_EQ(trendingTopicsFrom14To20[0], "topic2");// 1 time
+    EXPECT_EQ(trendingTopicsFrom14To20[1], "topic3");// 1 time
+    EXPECT_EQ(trendingTopicsFrom14To20[2], "topic4");// 1 time
+}
+
+TEST_F(YodelrTest, GetTrendingTopicsOrder) {
+    service->addUser("user1");
+    service->addPost("user1", "post1 with #topic1", 11);
+    service->addPost("user1", "post2 with #topic2", 12);
+    service->addPost("user1", "post3 with #topic1", 13);
+    service->addPost("user1", "post4 with #topic3", 14);
+    service->addPost("user1", "post5 with #topic3", 15);
+    service->addPost("user1", "post6 with #topic2", 16);
+    service->addPost("user1", "post7 with #topic2", 17);
+    service->addPost("user1", "post8 with #topic4", 18);
+
+    const auto trendingTopics = service->getTrendingTopics(11, 18);
+
+    EXPECT_EQ(trendingTopics.size(), 4);
+    EXPECT_EQ(trendingTopics[0], "topic2");// 3 times
+    EXPECT_EQ(trendingTopics[1], "topic1");// 2 times
+    EXPECT_EQ(trendingTopics[2], "topic3");// 2 times
+    EXPECT_EQ(trendingTopics[3], "topic4");// 1 time
 }

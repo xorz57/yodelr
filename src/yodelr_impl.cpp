@@ -72,21 +72,8 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
                 count++;
             }
         }
-        bool flag = false;
-        const auto range = topicFrequency.equal_range(count);
-        for (auto hint = range.first; hint != range.second; ++hint) {
-            if (topic < hint->second) {
-                if (count > 0) {
-                    topicFrequency.emplace_hint(hint, count, topic);
-                    flag = true;
-                    break;
-                }
-            }
-        }
-        if (!flag) {
-            if (count > 0) {
-                topicFrequency.emplace(count, topic);
-            }
+        if (count > 0) {
+            topicFrequency.emplace(count, topic);
         }
     }
     for (const auto &topic: std::views::values(topicFrequency)) {
