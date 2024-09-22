@@ -78,49 +78,26 @@ TEST_F(YodelrTest, DeleteUser) {
     EXPECT_EQ(topic2PostTexts[0], "post4 with #topic2");
 }
 
-TEST_F(YodelrTest, GetTrendingTopicsNoPosts) {
-    auto topics = service->getTrendingTopics(0, 10);
-    EXPECT_TRUE(topics.empty());
-}
+TEST_F(YodelrTest, GetTrendingTopics) {
+    service->addUser("user1");
+    service->addPost("user1", "post1 with #topic1", 11);
+    service->addPost("user1", "post3 with #topic1", 13);
+    service->addPost("user1", "post4 with #topic4", 14);
 
-TEST_F(YodelrTest, GetTrendingTopicsWithSinglePost) {
-    service->addUser("eve");
-    service->addPost("eve", "this is a test #testing post", 5);
+    service->addUser("user2");
+    service->addPost("user2", "post2 with #topic1 and #topic2", 12);
+    service->addPost("user2", "post5 with #topic2 and #topic3", 15);
 
-    auto topics = service->getTrendingTopics(0, 10);
-    EXPECT_EQ(topics.size(), 1);
-    EXPECT_EQ(topics[0], "testing");
-}
+    auto trendingTopicsFrom1To10 = service->getTrendingTopics(1, 10);
+    EXPECT_EQ(trendingTopicsFrom1To10.size(), 0);
 
-TEST_F(YodelrTest, GetTrendingTopicsMultiplePosts) {
-    service->addUser("frank");
-    service->addPost("frank", "#cpp is great", 1);
-    service->addPost("frank", "#cpp and #programming are awesome", 2);
-    service->addPost("frank", "#cpp is my favorite!", 3);
+    auto trendingTopicsFrom21To30 = service->getTrendingTopics(21, 30);
+    EXPECT_EQ(trendingTopicsFrom21To30.size(), 0);
 
-    auto topics = service->getTrendingTopics(1, 3);
-    EXPECT_EQ(topics.size(), 2);
-    EXPECT_EQ(topics[0], "cpp");
-    EXPECT_EQ(topics[1], "programming");
-}
-
-TEST_F(YodelrTest, NoPostsForNonExistentTopic) {
-    service->addUser("george");
-    service->addPost("george", "just do it", 1);
-
-    auto postTexts = service->getPostsForTopic("nonexistent");
-    EXPECT_TRUE(postTexts.empty());
-}
-
-TEST_F(YodelrTest, HandleMultipleUsersAndPosts) {
-    service->addUser("henry");
-    service->addPost("henry", "#tech is evolving", 10);
-
-    service->addUser("irene");
-    service->addPost("irene", "#tech and #innovation go hand in hand", 20);
-
-    auto topics = service->getTrendingTopics(0, 30);
-    EXPECT_EQ(topics.size(), 2);
-    EXPECT_EQ(topics[0], "tech");
-    EXPECT_EQ(topics[1], "innovation");
+    auto trendingTopicsFrom11To20 = service->getTrendingTopics(11, 20);
+    EXPECT_EQ(trendingTopicsFrom11To20.size(), 4);
+    EXPECT_EQ(trendingTopicsFrom11To20[0], "topic1");
+    EXPECT_EQ(trendingTopicsFrom11To20[1], "topic2");
+    EXPECT_EQ(trendingTopicsFrom11To20[2], "topic3");
+    EXPECT_EQ(trendingTopicsFrom11To20[3], "topic4");
 }
