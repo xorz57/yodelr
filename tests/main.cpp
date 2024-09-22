@@ -16,44 +16,66 @@ protected:
     }
 };
 
-TEST_F(YodelrTest, AddUser) {
-    service->addUser("alice");
+TEST_F(YodelrTest, GetPostsForUser) {
+    service->addUser("user1");
+    service->addPost("user1", "post1 with #topic1", 1);
+    service->addPost("user1", "post3 with #topic3", 3);
 
-    auto postTexts = service->getPostsForUser("alice");
-    EXPECT_TRUE(postTexts.empty());
+    service->addUser("user2");
+    service->addPost("user2", "post4 with #topic4", 4);
+    service->addPost("user2", "post2 with #topic2", 2);
+
+    auto user3PostTexts = service->getPostsForUser("user3");
+    EXPECT_TRUE(user3PostTexts.empty());
+
+    auto user1PostTexts = service->getPostsForUser("user1");
+    EXPECT_EQ(user1PostTexts.size(), 2);
+    EXPECT_EQ(user1PostTexts[0], "post3 with #topic3");
+    EXPECT_EQ(user1PostTexts[1], "post1 with #topic1");
+
+    auto user2PostTexts = service->getPostsForUser("user2");
+    EXPECT_EQ(user2PostTexts.size(), 2);
+    EXPECT_EQ(user2PostTexts[0], "post4 with #topic4");
+    EXPECT_EQ(user2PostTexts[1], "post2 with #topic2");
 }
 
-TEST_F(YodelrTest, AddPostAndCheckUserPostsOrder) {
-    service->addUser("bob");
-    service->addPost("bob", "post one with #topic1", 10);
-    service->addPost("bob", "post two with #topic2", 20);
+TEST_F(YodelrTest, GetPostsForTopic) {
+    service->addUser("user1");
+    service->addPost("user1", "post1 with #topic1 and #topic2", 1);
 
-    auto postTexts = service->getPostsForUser("bob");
-    EXPECT_EQ(postTexts.size(), 2);
-    EXPECT_EQ(postTexts[0], "post two with #topic2");
-    EXPECT_EQ(postTexts[1], "post one with #topic1");
+    service->addUser("user2");
+    service->addPost("user2", "post2 with #topic2", 2);
+
+    auto topic3PostTexts = service->getPostsForTopic("topic3");
+    EXPECT_EQ(topic3PostTexts.size(), 0);
+
+    auto topic2PostTexts = service->getPostsForTopic("topic2");
+    EXPECT_EQ(topic2PostTexts.size(), 2);
+    EXPECT_EQ(topic2PostTexts[0], "post2 with #topic2");
+    EXPECT_EQ(topic2PostTexts[1], "post1 with #topic1 and #topic2");
 }
 
-TEST_F(YodelrTest, AddPostAndCheckTopic) {
-    service->addUser("charlie");
-    service->addPost("charlie", "learning #cpp and #programming", 1);
-    service->addPost("charlie", "enjoying #programming!", 2);
+TEST_F(YodelrTest, DeleteUser) {
+    service->addUser("user1");
+    service->addPost("user1", "post1 with #topic1", 1);
+    service->addPost("user1", "post2 with #topic2", 2);
 
-    auto postTexts = service->getPostsForTopic("programming");
-    EXPECT_EQ(postTexts.size(), 2);
-    EXPECT_EQ(postTexts[0], "enjoying #programming!");
-    EXPECT_EQ(postTexts[1], "learning #cpp and #programming");
-}
+    service->addUser("user2");
+    service->addPost("user2", "post3 with #topic1", 3);
+    service->addPost("user2", "post4 with #topic2", 4);
 
-TEST_F(YodelrTest, DeleteUserRemovesPosts) {
-    service->addUser("dave");
-    service->addPost("dave", "post #one", 1);
-    service->addPost("dave", "post #two", 2);
+    service->deleteUser("user1");
 
-    service->deleteUser("dave");
+    auto user1PostTexts = service->getPostsForUser("user1");
+    EXPECT_TRUE(user1PostTexts.empty());
 
-    auto postTexts = service->getPostsForUser("dave");
-    EXPECT_TRUE(postTexts.empty());
+    auto topic1PostTexts = service->getPostsForTopic("topic1");
+    EXPECT_EQ(topic1PostTexts.size(), 1);
+    EXPECT_EQ(topic1PostTexts[0], "post3 with #topic1");
+
+    auto topic2PostTexts = service->getPostsForTopic("topic2");
+    EXPECT_EQ(topic2PostTexts.size(), 1);
+    EXPECT_EQ(topic2PostTexts[0], "post4 with #topic2");
 }
 
 TEST_F(YodelrTest, GetTrendingTopicsNoPosts) {
