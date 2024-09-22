@@ -65,7 +65,6 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
     for (const auto &[topic, timestamps]: mTopicToTimestamps) {
         std::uint64_t count = 0;
         for (const auto timestamp: timestamps) {
-            if (timestamp > toTimestamp) break;
             if (timestamp >= fromTimestamp && timestamp <= toTimestamp) {
                 count++;
             }
@@ -75,9 +74,9 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
         for (auto hint = range.first; hint != range.second; ++hint) {
             if (topic < hint->second) {
                 if (count > 0) {
-                topicFrequency.emplace_hint(hint, count, topic);
-                flag = true;
-                break;
+                    topicFrequency.emplace_hint(hint, count, topic);
+                    flag = true;
+                    break;
                 }
             }
         }
