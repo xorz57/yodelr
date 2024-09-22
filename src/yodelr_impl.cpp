@@ -16,7 +16,7 @@ void YodelrImpl::addPost(const std::string &userName, const std::string &postTex
 
     mUserToTimestamps[userName].insert(timestamp);
     mTimestampToPostText[timestamp] = postText;
-    for (const std::string &topic: YodelrImpl::extractTopics(postText)) {
+    for (const auto &topic: YodelrImpl::extractTopics(postText)) {
         mTopicToTimestamps[topic].insert(timestamp);
     }
 }
