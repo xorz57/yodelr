@@ -28,9 +28,13 @@ int main() {
 
     service->addUser("john");
 
-    service->addPost("john", "just #chilling today", 1);
-    service->addPost("john", "eating #steak for dinner", 2);
-    service->addPost("john", "ugh! this #steak tasted like dog food", 3);
+    try {
+        service->addPost("john", "just #chilling today", 1);
+        service->addPost("john", "eating #steak for dinner", 2);
+        service->addPost("john", "ugh! this #steak tasted like dog food", 3);
+    } catch (const std::length_error &e) {
+        std::cerr << e.what() << "\n";
+    }
 
     const auto postTexts1 = service->getPostsForUser("john");
     const auto postTexts2 = service->getPostsForTopic("steak");
