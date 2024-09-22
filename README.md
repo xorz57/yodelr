@@ -2,9 +2,11 @@
 
 [![Build](https://github.com/xorz57/yodelr/actions/workflows/Build.yml/badge.svg)](https://github.com/xorz57/yodelr/actions/workflows/Build.yml)
 
-## Diagrams
+## ER Diagram
 
 ![diagram1](assets/diagram1.png)
+
+## Data Structures Overview
 
 ![diagram2](assets/diagram2.png)
 
