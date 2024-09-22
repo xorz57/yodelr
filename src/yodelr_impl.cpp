@@ -80,7 +80,9 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
             }
         }
         if (!flag) {
-            topicFrequency.emplace(count, topic);
+            if (count > 0) {
+                topicFrequency.emplace(count, topic);
+            }
         }
     }
     for (const auto &topic: std::views::values(topicFrequency)) {
