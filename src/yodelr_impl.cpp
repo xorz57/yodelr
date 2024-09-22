@@ -11,6 +11,10 @@ void YodelrImpl::addUser(const std::string &userName) {
 }
 
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
+    if (postText.length() > 140) {
+        throw std::length_error("post text exceeds the 140-character limit");
+    }
+
     mUserToTimestamps[userName].insert(timestamp);
     mTimestampToPostText[timestamp] = postText;
     for (const std::string &topic: YodelrImpl::extractTopicsWithoutRegex(postText)) {
