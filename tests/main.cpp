@@ -18,6 +18,7 @@ protected:
 
 TEST_F(YodelrTest, AddUser) {
     service->addUser("alice");
+
     auto postTexts = service->getPostsForUser("alice");
     EXPECT_TRUE(postTexts.empty());
 }
