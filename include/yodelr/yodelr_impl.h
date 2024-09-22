@@ -2,6 +2,7 @@
 
 #include <map>
 #include <set>
+#include <unordered_map>
 
 namespace yodelr {
     class YodelrImpl : public Yodelr {
@@ -18,6 +19,6 @@ namespace yodelr {
 
         std::map<std::uint64_t, std::string, std::greater<std::uint64_t>> mTimestampToPostText;
         std::map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mTopicToTimestamps;
-        std::map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mUserNameToTimestamps;
+        std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mUserNameToTimestamps;
     };
 }// namespace yodelr
