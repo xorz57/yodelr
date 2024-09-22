@@ -19,6 +19,6 @@ namespace yodelr {
 
         std::map<std::uint64_t, std::string, std::greater<std::uint64_t>> mTimestampToPostText;
         std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mTopicToTimestamps;
-        std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mUserToTimestamps;
+        std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mUserNameToTimestamps;
     };
 }// namespace yodelr

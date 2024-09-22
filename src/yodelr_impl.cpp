@@ -6,7 +6,7 @@
 using namespace yodelr;
 
 void YodelrImpl::addUser(const std::string &userName) {
-    mUserToTimestamps[userName] = {};
+    mUserNameToTimestamps[userName] = {};
 }
 
 void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
@@ -14,7 +14,7 @@ void YodelrImpl::addPost(const std::string &userName, const std::string &postTex
         throw std::length_error("post text exceeds the 140-character limit");
     }
 
-    mUserToTimestamps[userName].insert(timestamp);
+    mUserNameToTimestamps[userName].insert(timestamp);
     mTimestampToPostText[timestamp] = postText;
     for (const auto &topic: YodelrImpl::extractTopics(postText)) {
         mTopicToTimestamps[topic].insert(timestamp);
@@ -22,22 +22,22 @@ void YodelrImpl::addPost(const std::string &userName, const std::string &postTex
 }
 
 void YodelrImpl::deleteUser(const std::string &userName) {
-    const auto it = mUserToTimestamps.find(userName);
-    if (it != mUserToTimestamps.end()) {
+    const auto it = mUserNameToTimestamps.find(userName);
+    if (it != mUserNameToTimestamps.end()) {
         for (const auto timestamp: it->second) {
             mTimestampToPostText.erase(timestamp);
             for (auto &timestamps: std::views::values(mTopicToTimestamps)) {
                 timestamps.erase(timestamp);
             }
         }
-        mUserToTimestamps.erase(it);
+        mUserNameToTimestamps.erase(it);
     }
 }
 
 PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
     PostTexts postTexts;
-    const auto it1 = mUserToTimestamps.find(userName);
-    if (it1 != mUserToTimestamps.end()) {
+    const auto it1 = mUserNameToTimestamps.find(userName);
+    if (it1 != mUserNameToTimestamps.end()) {
         for (auto timestamp: it1->second) {
             const auto it2 = mTimestampToPostText.find(timestamp);
             if (it2 != mTimestampToPostText.end()) {
