@@ -1,10 +1,9 @@
 #include <yodelr/yodelr_impl.h>
 
 #include <ranges>
+#include <stdexcept>
 
 using namespace yodelr;
-
-const std::regex YodelrImpl::sTopicRegex(R"(\#([0-9a-zA-Z_]+))");
 
 void YodelrImpl::addUser(const std::string &userName) {
     mUserToTimestamps[userName] = {};
@@ -17,7 +16,7 @@ void YodelrImpl::addPost(const std::string &userName, const std::string &postTex
 
     mUserToTimestamps[userName].insert(timestamp);
     mTimestampToPostText[timestamp] = postText;
-    for (const std::string &topic: YodelrImpl::extractTopicsWithoutRegex(postText)) {
+    for (const std::string &topic: YodelrImpl::extractTopics(postText)) {
         mTopicToTimestamps[topic].insert(timestamp);
     }
 }
@@ -96,17 +95,7 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
     return topics;
 }
 
-Topics YodelrImpl::extractTopicsWithRegex(const std::string &postText) {
-    Topics topics;
-    const auto topicsBegin = std::sregex_iterator(postText.begin(), postText.end(), sTopicRegex);
-    const auto topicsEnd = std::sregex_iterator();
-    for (auto i = topicsBegin; i != topicsEnd; ++i) {
-        topics.push_back((*i)[1].str());
-    }
-    return topics;
-}
-
-Topics YodelrImpl::extractTopicsWithoutRegex(const std::string &postText) {
+Topics YodelrImpl::extractTopics(const std::string &postText) {
     Topics topics;
     std::string topic;
     bool flag = false;

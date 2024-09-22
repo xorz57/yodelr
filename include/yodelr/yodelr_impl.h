@@ -1,7 +1,6 @@
 #include <yodelr/yodelr.h>
 
 #include <map>
-#include <regex>
 #include <set>
 #include <unordered_map>
 
@@ -16,10 +15,7 @@ namespace yodelr {
         Topics getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const override;
 
     private:
-        static Topics extractTopicsWithRegex(const std::string &postText);
-        static Topics extractTopicsWithoutRegex(const std::string &postText);
-
-        static const std::regex sTopicRegex;
+        static Topics extractTopics(const std::string &postText);
 
         std::map<std::uint64_t, std::string, std::greater<std::uint64_t>> mTimestampToPostText;
         std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mTopicToTimestamps;

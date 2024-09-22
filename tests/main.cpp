@@ -2,6 +2,7 @@
 #include <yodelr/yodelr_impl.h>
 
 #include <memory>
+#include <stdexcept>
 
 class YodelrTest : public testing::Test {
 protected:
