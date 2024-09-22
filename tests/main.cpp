@@ -94,10 +94,21 @@ TEST_F(YodelrTest, GetTrendingTopics) {
     auto trendingTopicsFrom21To30 = service->getTrendingTopics(21, 30);
     EXPECT_EQ(trendingTopicsFrom21To30.size(), 0);
 
+    auto trendingTopicsFrom1To13 = service->getTrendingTopics(1, 13);
+    EXPECT_EQ(trendingTopicsFrom1To13.size(), 2);
+    EXPECT_EQ(trendingTopicsFrom1To13[0], "topic1");
+    EXPECT_EQ(trendingTopicsFrom1To13[1], "topic2");
+
     auto trendingTopicsFrom11To20 = service->getTrendingTopics(11, 20);
     EXPECT_EQ(trendingTopicsFrom11To20.size(), 4);
     EXPECT_EQ(trendingTopicsFrom11To20[0], "topic1");
     EXPECT_EQ(trendingTopicsFrom11To20[1], "topic2");
     EXPECT_EQ(trendingTopicsFrom11To20[2], "topic3");
     EXPECT_EQ(trendingTopicsFrom11To20[3], "topic4");
+
+    auto trendingTopicsFrom14To20 = service->getTrendingTopics(14, 20);
+    EXPECT_EQ(trendingTopicsFrom14To20.size(), 3);
+    EXPECT_EQ(trendingTopicsFrom14To20[0], "topic2");
+    EXPECT_EQ(trendingTopicsFrom14To20[1], "topic3");
+    EXPECT_EQ(trendingTopicsFrom14To20[2], "topic4");
 }
