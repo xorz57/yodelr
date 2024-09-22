@@ -74,9 +74,11 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
         const auto range = topicFrequency.equal_range(count);
         for (auto hint = range.first; hint != range.second; ++hint) {
             if (topic < hint->second) {
+                if (count > 0) {
                 topicFrequency.emplace_hint(hint, count, topic);
                 flag = true;
                 break;
+                }
             }
         }
         if (!flag) {
