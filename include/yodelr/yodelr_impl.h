@@ -3,6 +3,7 @@
 #include <map>
 #include <regex>
 #include <set>
+#include <unordered_map>
 
 namespace yodelr {
     class YodelrImpl : public Yodelr {
@@ -21,7 +22,7 @@ namespace yodelr {
         static const std::regex sTopicRegex;
 
         std::map<std::uint64_t, std::string, std::greater<std::uint64_t>> mTimestampToPostText;
-        std::map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mTopicToTimestamps;
-        std::map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mUserToTimestamps;
+        std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mTopicToTimestamps;
+        std::unordered_map<std::string, std::set<std::uint64_t, std::greater<std::uint64_t>>> mUserToTimestamps;
     };
 }// namespace yodelr
