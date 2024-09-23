@@ -6,10 +6,6 @@
 
 ![diagram1](assets/diagram1.png)
 
-## Data Structures Overview
-
-![diagram2](assets/diagram2.png)
-
 ## How to Build
 
 ```bash
