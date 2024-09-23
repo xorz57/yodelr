@@ -2,9 +2,9 @@
 
 [![Build](https://github.com/xorz57/yodelr/actions/workflows/Build.yml/badge.svg)](https://github.com/xorz57/yodelr/actions/workflows/Build.yml)
 
-## ER Diagram
+## Diagram
 
-![diagram1](assets/diagram1.png)
+![diagram](assets/diagram.png)
 
 ## How to Build
 
