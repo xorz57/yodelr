@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <yodelr/yodelr_impl.h>
 
 #include <memory>
