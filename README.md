@@ -1,7 +1,5 @@
 # Yodelr
 
-[![Build](https://github.com/xorz57/yodelr/actions/workflows/Build.yml/badge.svg)](https://github.com/xorz57/yodelr/actions/workflows/Build.yml)
-
 ## Diagram
 
 ![diagram](assets/diagram.png)
