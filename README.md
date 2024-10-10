@@ -10,6 +10,13 @@ However, after dedicating time to prepare and participate in several rounds of i
 
 While I am grateful for the opportunity, I believe the process could have been more efficient and transparent, saving time for both parties. I hope this project serves as a demonstration of my abilities and the effort I put into the challenge.
 
+### Interview Timeline
+- **2024/09/19:** Initial interview with the founder. I left with a very good impression and received positive feedback.
+- **2024/09/19:** Received the coding challenge.
+- **2024/09/23:** Submitted my solution to the coding challenge.
+- **2024/10/07:** Technical interview. The interview went well, with no indication of any issues.
+- **2024/10/09:** Received a rejection letter, citing lack of experience as the reason for not moving forward.
+
 ## Diagram
 
 ![diagram](assets/diagram.png)
