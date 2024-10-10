@@ -19,7 +19,22 @@ While I am grateful for the opportunity, I believe the process could have been m
 
 ## Diagram
 
-![diagram](assets/diagram.png)
+```
+YodelrImpl
+├── mTimestampToPostText (std::map)
+│     ├── Key: uint64_t (timestamp)
+│     └── Value: std::string (postText)
+│
+├── mTopicToTimestamps (std::map)
+│     ├── Key: std::string (topic)
+│     └── Value: std::set<uint64_t, std::greater<>>
+│           └── Timestamps (sorted in descending order)
+│
+└── mUserNameToTimestamps (std::unordered_map)
+      ├── Key: std::string (userName)
+      └── Value: std::set<uint64_t, std::greater<>>
+            └── Timestamps (sorted in descending order)
+```
 
 ## How to Build
 
