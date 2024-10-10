@@ -12,7 +12,7 @@ While I am grateful for the opportunity, I believe the process could have been m
 
 | Date       | Description                                                                                               |
 | ---------- | --------------------------------------------------------------------------------------------------------- |
-| 2024/09/19 | Initial interview with the founder. I left with a very good impression and received the coding challenge. |
+| 2024/09/19 | Initial interview with the founder. I received the coding challenge.                                      |
 | 2024/09/23 | Submitted my solution to the coding challenge.                                                            |
 | 2024/10/07 | Technical interview. The interview went well, with no indication of any issues.                           |
 | 2024/10/09 | Received a rejection letter, citing lack of experience as the reason for not moving forward.              |
