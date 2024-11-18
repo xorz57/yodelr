@@ -38,12 +38,14 @@ int main() {
 
     const auto postTexts1 = service->getPostsForUser("john");
     const auto postTexts2 = service->getPostsForTopic("steak");
+    const auto postTexts3 = service->getPostsForTopics({"chilling", "steak"});
 
     const auto topics1 = service->getTrendingTopics(1, 3);
     const auto topics2 = service->getTrendingTopics(2, 3);
 
     printPosts(postTexts1, "postTexts1");
     printPosts(postTexts2, "postTexts2");
+    printPosts(postTexts3, "postTexts3");
 
     printTopics(topics1, "topics1");
     printTopics(topics2, "topics2");

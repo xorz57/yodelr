@@ -62,6 +62,24 @@ PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
     return postTexts;
 }
 
+PostTexts YodelrImpl::getPostsForTopics(const Topics &topics) const {
+    PostTexts postTexts;
+    std::set<std::uint64_t, std::greater<>> timestamps;
+    for (const auto &topic: topics) {
+        const auto it = mTopicToTimestamps.find(topic);
+        if (it != mTopicToTimestamps.end()) {
+            timestamps.insert(it->second.begin(), it->second.end());
+        }
+    }
+    for (const auto &timestamp: timestamps) {
+        const auto it = mTimestampToPostText.find(timestamp);
+        if (it != mTimestampToPostText.end()) {
+            postTexts.push_back(it->second);
+        }
+    }
+    return postTexts;
+}
+
 Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const {
     Topics topics;
     std::multimap<std::uint64_t, std::string, std::greater<>> topicFrequency;

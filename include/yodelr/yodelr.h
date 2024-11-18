@@ -27,6 +27,7 @@ namespace yodelr {
         virtual void deleteUser(const std::string &userName) = 0;
         virtual PostTexts getPostsForUser(const std::string &userName) const = 0;
         virtual PostTexts getPostsForTopic(const std::string &topic) const = 0;
+        virtual PostTexts getPostsForTopics(const Topics &topics) const = 0;
         virtual Topics getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const = 0;
     };
 }// namespace yodelr

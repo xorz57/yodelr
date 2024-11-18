@@ -14,6 +14,7 @@ namespace yodelr {
         void deleteUser(const std::string &userName) override;
         PostTexts getPostsForUser(const std::string &userName) const override;
         PostTexts getPostsForTopic(const std::string &topic) const override;
+        PostTexts getPostsForTopics(const Topics &topics) const;
         Topics getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const override;
 
     private:
