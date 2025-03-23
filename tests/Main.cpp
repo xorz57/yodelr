@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
+#include "Yodelr/Yodelr.h"
 
-#include <Yodelr/Yodelr.h>
+#include <gtest/gtest.h>
 
 #include <memory>
 #include <stdexcept>
