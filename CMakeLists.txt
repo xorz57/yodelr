@@ -19,6 +19,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(Yodelr STATIC src/Yodelr.cpp)
 target_include_directories(Yodelr PUBLIC include)
 
+add_library(YodelrMock INTERFACE)
+target_include_directories(YodelrMock INTERFACE ${CMAKE_SOURCE_DIR}/mocks)
+target_link_libraries(YodelrMock INTERFACE Yodelr)
+target_link_libraries(YodelrMock INTERFACE GTest::gmock)
+
 if(YODELR_EXAMPLES)
     add_subdirectory(examples)
 endif()

@@ -13,7 +13,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
-add_executable(YodelrTest Main.cpp)
+add_executable(YodelrTest YodelrTest.cpp)
 target_link_libraries(YodelrTest PRIVATE GTest::gtest_main)
 target_link_libraries(YodelrTest PRIVATE Yodelr)
 
