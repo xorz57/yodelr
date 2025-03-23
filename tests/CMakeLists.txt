@@ -15,7 +15,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(YodelrTest Main.cpp)
 target_link_libraries(YodelrTest PRIVATE GTest::gtest_main)
-target_link_libraries(YodelrTest PRIVATE Yodelr::Yodelr)
+target_link_libraries(YodelrTest PRIVATE Yodelr)
 
 include(GoogleTest)
 

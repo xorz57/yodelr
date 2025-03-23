@@ -17,7 +17,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(Yodelr STATIC src/Yodelr.cpp)
-add_library(Yodelr::Yodelr ALIAS Yodelr)
 target_include_directories(Yodelr PUBLIC include)
 
 if(YODELR_EXAMPLES)
