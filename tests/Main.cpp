@@ -1,16 +1,18 @@
 #include <gtest/gtest.h>
 
-#include <yodelr/yodelr_impl.h>
+#include <Yodelr/Yodelr.h>
 
 #include <memory>
 #include <stdexcept>
 
-class YodelrTest : public testing::Test {
+using ::testing::Test;
+
+class YodelrTest : public Test {
 protected:
-    std::unique_ptr<yodelr::Yodelr> service;
+    std::unique_ptr<yodelr::IYodelr> service;
 
     void SetUp() override {
-        service = std::make_unique<yodelr::YodelrImpl>();
+        service = std::make_unique<yodelr::Yodelr>();
     }
 
     void TearDown() override {

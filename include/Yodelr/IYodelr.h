@@ -19,9 +19,9 @@ namespace yodelr {
      * This allows adding and deleting users, adding and retrieving posts
      * and getting trending topics.
      */
-    class Yodelr {
+    class IYodelr {
     public:
-        virtual ~Yodelr() {}
+        virtual ~IYodelr() {}
         virtual void addUser(const std::string &userName) = 0;
         virtual void addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) = 0;
         virtual void deleteUser(const std::string &userName) = 0;

@@ -1,13 +1,13 @@
 #pragma once
 
-#include <yodelr/yodelr.h>
+#include <Yodelr/IYodelr.h>
 
 #include <map>
 #include <set>
 #include <unordered_map>
 
 namespace yodelr {
-    class YodelrImpl : public Yodelr {
+    class Yodelr : public IYodelr {
     public:
         void addUser(const std::string &userName) override;
         void addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) override;

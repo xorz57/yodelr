@@ -1,4 +1,4 @@
-#include <yodelr/yodelr_impl.h>
+#include <Yodelr/Yodelr.h>
 
 #include <cstdlib>
 #include <iostream>
@@ -21,7 +21,7 @@ static void printTopics(const yodelr::Topics &topics, const std::string &label) 
 }
 
 int main() {
-    std::unique_ptr<yodelr::Yodelr> service = std::make_unique<yodelr::YodelrImpl>();
+    std::unique_ptr<yodelr::IYodelr> service = std::make_unique<yodelr::Yodelr>();
     if (!service) {
         return EXIT_FAILURE;
     }

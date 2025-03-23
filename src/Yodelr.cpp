@@ -1,27 +1,27 @@
-#include <yodelr/yodelr_impl.h>
+#include <Yodelr/Yodelr.h>
 
 #include <ranges>
 #include <stdexcept>
 
 using namespace yodelr;
 
-void YodelrImpl::addUser(const std::string &userName) {
+void Yodelr::addUser(const std::string &userName) {
     mUserNameToTimestamps[userName] = {};
 }
 
-void YodelrImpl::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
+void Yodelr::addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) {
     if (postText.length() > 140) {
         throw std::length_error("post text exceeds the 140-character limit");
     }
 
     mUserNameToTimestamps[userName].insert(timestamp);
     mTimestampToPostText[timestamp] = postText;
-    for (const auto &topic: YodelrImpl::extractTopics(postText)) {
+    for (const auto &topic: Yodelr::extractTopics(postText)) {
         mTopicToTimestamps[topic].insert(timestamp);
     }
 }
 
-void YodelrImpl::deleteUser(const std::string &userName) {
+void Yodelr::deleteUser(const std::string &userName) {
     const auto it = mUserNameToTimestamps.find(userName);
     if (it != mUserNameToTimestamps.end()) {
         for (const auto timestamp: it->second) {
@@ -34,7 +34,7 @@ void YodelrImpl::deleteUser(const std::string &userName) {
     }
 }
 
-PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
+PostTexts Yodelr::getPostsForUser(const std::string &userName) const {
     PostTexts postTexts;
     const auto it1 = mUserNameToTimestamps.find(userName);
     if (it1 != mUserNameToTimestamps.end()) {
@@ -48,7 +48,7 @@ PostTexts YodelrImpl::getPostsForUser(const std::string &userName) const {
     return postTexts;
 }
 
-PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
+PostTexts Yodelr::getPostsForTopic(const std::string &topic) const {
     PostTexts postTexts;
     const auto it1 = mTopicToTimestamps.find(topic);
     if (it1 != mTopicToTimestamps.end()) {
@@ -62,7 +62,7 @@ PostTexts YodelrImpl::getPostsForTopic(const std::string &topic) const {
     return postTexts;
 }
 
-PostTexts YodelrImpl::getPostsForTopics(const Topics &topics) const {
+PostTexts Yodelr::getPostsForTopics(const Topics &topics) const {
     PostTexts postTexts;
     std::set<std::uint64_t, std::greater<>> timestamps;
     for (const auto &topic: topics) {
@@ -80,7 +80,7 @@ PostTexts YodelrImpl::getPostsForTopics(const Topics &topics) const {
     return postTexts;
 }
 
-Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const {
+Topics Yodelr::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t toTimestamp) const {
     Topics topics;
     std::multimap<std::uint64_t, std::string, std::greater<>> topicFrequency;
     for (const auto &[topic, timestamps]: mTopicToTimestamps) {
@@ -100,7 +100,7 @@ Topics YodelrImpl::getTrendingTopics(std::uint64_t fromTimestamp, std::uint64_t 
     return topics;
 }
 
-Topics YodelrImpl::extractTopics(const std::string &postText) {
+Topics Yodelr::extractTopics(const std::string &postText) {
     Topics topics;
     std::string topic;
     bool flag = false;
