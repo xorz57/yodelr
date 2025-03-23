@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Yodelr/IYodelr.h"
+#include "yodelr/yodelr.h"
 
 #include <gmock/gmock.h>
 
-class YodelrMock : public IYodelr {
+class YodelrMock : public Yodelr {
 public:
     MOCK_METHOD(void, addUser, (const std::string &userName), (override));
     MOCK_METHOD(void, addPost, (const std::string &userName, const std::string &postText, std::uint64_t timestamp), (override));

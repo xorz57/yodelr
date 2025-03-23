@@ -14,14 +14,14 @@ namespace yodelr {
     using Topics = std::vector<std::string>;
 
     /**
-     * The Yodelr service interface.
+     * The YodelrImpl service interface.
      *
      * This allows adding and deleting users, adding and retrieving posts
      * and getting trending topics.
      */
-    class IYodelr {
+    class Yodelr {
     public:
-        virtual ~IYodelr() {}
+        virtual ~Yodelr() {}
         virtual void addUser(const std::string &userName) = 0;
         virtual void addPost(const std::string &userName, const std::string &postText, std::uint64_t timestamp) = 0;
         virtual void deleteUser(const std::string &userName) = 0;

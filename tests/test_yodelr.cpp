@@ -1,4 +1,4 @@
-#include "Yodelr/Yodelr.h"
+#include "yodelr/yodelr_impl.h"
 
 #include <gtest/gtest.h>
 
@@ -9,10 +9,10 @@ using ::testing::Test;
 
 class YodelrTest : public Test {
 protected:
-    std::unique_ptr<yodelr::IYodelr> service;
+    std::unique_ptr<yodelr::Yodelr> service;
 
     void SetUp() override {
-        service = std::make_unique<yodelr::Yodelr>();
+        service = std::make_unique<yodelr::YodelrImpl>();
     }
 
     void TearDown() override {
